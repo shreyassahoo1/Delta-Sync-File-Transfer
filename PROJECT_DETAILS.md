@@ -1,3 +1,8 @@
+![Python](https://img.shields.io/badge/Python-%3E=3.8-blue)
+![License](https://img.shields.io/badge/License-Academic-green)
+![Status](https://img.shields.io/badge/Status-Completed-orange)
+
+
 # Smart TCP File Transfer System with Delta Synchronization
 
 ## 1. Project Overview
