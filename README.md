@@ -1,96 +1,96 @@
-# 🚀 Advanced TCP File Transfer System
-
-A robust, multi-threaded client-server application for file management, featuring **Delta Synchronization**, **Real-time Web Dashboard**, **Resumable Downloads**, and **On-the-fly Compression**.
+# 📡 Smart TCP File Transfer System with Delta Synchronization
 
 ---
 
-## 🌟 Key Features
+## 📌 Overview
 
-### 1. **Core Functionality**
-- **Robust Upload/Download**: Reliable TCP file transfer protocol with strict handshakes.
-- **Multi-Client Support**: Server handles multiple clients simultaneously using threading.
-- **Graphical User Interface (GUI)**: Modern `tkinter` interface for easy file management.
+This project is a robust client-server file transfer system built using **TCP sockets**, designed as part of Operating Systems / Networking coursework.
 
-### 2. **Innovative Features**
-- **⚡ Delta Synchronization** (`rsync`-style):
-    - **Smart Sync**: Only transfers modified parts of a file.
-    - **Bandwidth Saving**: Can reduce data transfer by **>99%** for small edits to large files.
-    - **Toggleable**: Enable/Disable via GUI checkbox.
-- **📊 Real-Time Web Dashboard**:
-    - **Live Monitoring**: View connected clients and server status at `http://localhost:8000`.
-    - **Statistics**: Track total data sent and bandwidth saved by Delta Sync.
-- **�️ Secure File Deletion**:
-    - **Password Protected**: Deleting files from the server requires admin authentication (Default: `admin`).
-    - **Safe**: Prevents accidental or unauthorized removals.
+The key innovation is **Delta Synchronization (Delta Sync)** — an rsync-style optimization that transmits only the modified blocks of a file instead of re-uploading the entire file.
+
+The system includes:
+- Multi-threaded TCP server
+- Tkinter-based GUI client
+- Real-time Flask monitoring dashboard
+- Block-level SHA-256 hashing
+- Integrity verification mechanism
 
 ---
 
-## 🛠️ Project Structure
+## 🚀 Key Features
 
-```
-OS EL/
-├── server.py              # Central Server (TCP + Flask Dashboard via Threading)
-├── client_gui.py          # Modern GUI Client (Recommended)
-├── client.py              # Legacy CLI Client
-├── dashboard.py           # Flask Backend for Web Monitor
-├── monitor.py             # Shared State Manager
-├── utils.py               # Hashing & Chunking Logic
-├── templates/             # HTML Templates
-│   └── dashboard.html     # Dashboard Frontend
-└── files/                 # Server Storage
-```
+- ✔ Reliable full file upload & download
+- ✔ Delta Synchronization (>99% bandwidth savings)
+- ✔ Multi-threaded concurrent server
+- ✔ Real-time web dashboard (Flask + Chart.js)
+- ✔ Block-level integrity validation
+- ✔ Custom TCP protocol
 
 ---
 
-## 🚀 How to Run
+## 🏗️ System Architecture
 
-### Prerequisites
-- Python 3.6+
-- Libraries: `flask` (install via `pip install flask`)
-
-### Step 1: Start the Server
-First, launch the server. It will create the `files/` directory and start the Web Dashboard.
-```powershell
-python server.py
-```
-> Output:
-> `[+] Server is listening on port 5001...`
-> `[+] Dashboard running on http://localhost:8000`
-
-### Step 2: Open the Web Dashboard
-Open your browser and navigate to:
-👉 **[http://localhost:8000](http://localhost:8000)**
-
-### Step 3: Run the Client
-Open a new terminal to run the GUI client.
-```powershell
-python client_gui.py
-```
+Client (GUI / CLI)
+↓
+TCP Socket Communication
+↓
+Multi-threaded Server
+↓
+Delta Comparison Engine
+↓
+File Reconstruction + Integrity Check
+↓
+Monitoring Dashboard
 
 ---
 
-## 📚 Feature Usage Guide
+## 🧠 Delta Synchronization Algorithm
 
-### ⚡ Using Delta Sync
-1.  Connect to the server.
-2.  Ensure "Delta Sync" checkbox is **checked**.
-3.  Select a file that already exists on the server (but has local changes).
-4.  Click **Upload**.
-5.  Watch the logs! You'll see "Bandwidth saved: 99.5%" instead of a full re-upload.
+1. File split into 4096-byte blocks  
+2. SHA-256 hash computed for each block  
+3. Client sends block hashes to server  
+4. Server compares against the existing file  
+5. Server returns list of missing block indices  
+6. Client sends only modified blocks  
+7. Server reconstructs the file  
+8. Final integrity check using full-file hash  
 
-### 🗑️ Deleting Files
-1.  Select a file from the server list.
-2.  Click **Delete Selected**.
-3.  Enter the admin password: **`admin`**.
-4.  The file is securely removed.
+Result:  
+If 4KB changes in 10MB file → only 4KB is transmitted.
+
+---
+
+## 📂 Project Structure
+
+server.py # Main multi-threaded TCP server
+client_gui.py # Tkinter-based GUI client
+utils.py # Hashing & chunking logic
+monitor.py # Thread-safe shared state
+dashboard.py # Flask web dashboard
+templates/
+dashboard.html
+files/ # Server storage directory
 
 ---
 
-## ⚙️ Technical Details
-- **Protocol**: Custom binary protocol with `CMD -> ACK -> SIZE -> ACK -> DATA` handshake.
-- **Delta Algorithm**: Block-level SHA-256 hashing (4KB chunks).
-- **Web Stack**: Flask (Backend) + Vanilla JS/HTML (Frontend) + Chart.js.
-- **Port**: 5001 (TCP), 8000 (HTTP).
+## ⚙️ Technologies Used
 
----
-*Created for OS/Networks Project*
+- Python
+- socket (TCP networking)
+- threading (concurrency)
+- hashlib (SHA-256 hashing)
+- Tkinter (GUI)
+- Flask (web dashboard)
+- JSON (protocol data)
+
+## 🎓 Academic Context
+
+Developed as part of:
+- Operating Systems / Networking coursework
+- Client-Server architecture study
+- Concurrency & synchronization concepts
+
+## ⚖️ License
+
+This project is intended for academic and educational purposes only.  
+See `LICENSE` file for complete terms.
